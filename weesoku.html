@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEE SOKU - Layanan Produk Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #2563EB;
+            --secondary: #F59E0B;
+            --bg-color: #F3F4F6;
+            --text-dark: #1F2937;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        header {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 5%;
+            background: linear-gradient(135deg, #2563EB, #1D4ED8);
+            color: var(--white);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        /* Container & Cards */
+        .container {
+            padding: 3rem 5%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+
+        /* Layanan Grid */
+        .layanan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .card ul {
+            list-style: none;
+            text-align: left;
+            font-size: 0.9rem;
+            color: #6B7280;
+        }
+
+        .card ul li {
+            margin-bottom: 0.3rem;
+        }
+
+        /* Form Pemesanan */
+        .form-container {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #D1D5DB;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .btn-wa {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: #25D366; /* WhatsApp Green */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-wa:hover {
+            background-color: #128C7E;
+        }
+
+        /* Pembayaran Info */
+        .payment-info {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #EFF6FF;
+            border-radius: 5px;
+            border: 1px dashed var(--primary);
+        }
+
+        /* Tentang Kami */
+        .tentang-kami {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .info-table td:first-child {
+            font-weight: 600;
+            width: 30%;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none; /* Simplifikasi untuk mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">WEE SOKU</div>
+        <nav>
+            <ul>
+                <li><a href="#beranda">Beranda</a></li>
+                <li><a href="#layanan">Layanan</a></li>
+                <li><a href="#pesan">Pesan</a></li>
+                <li><a href="#tentang">Tentang Kami</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="beranda" class="hero">
+        <h1>Satu Tempat untuk Semua Kebutuhan Digital Anda.</h1>
+        <p>Transaksi cepat, aman, dan terpercaya untuk kebutuhan harian Anda.</p>
+        <a href="#pesan" style="background: var(--secondary); color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">Pesan Sekarang</a>
+    </section>
+
+    <section id="layanan" class="container">
+        <h2 class="section-title">Layanan Kami</h2>
+        <div class="layanan-grid">
+            <div class="card">
+                <i class="fa-solid fa-gamepad"></i>
+                <h3>Top Up Game</h3>
+                <ul>
+                    <li>- Free Fire</li>
+                    <li>- Mobile Legends</li>
+                    <li>- Call of Duty</li>
+                    <li>- Genshin Impact</li>
+                    <li>- Dan lainnya...</li>
+                </ul>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-wallet"></i>
+                <h3>Top Up E-Wallet</h3>
+                <ul>
+                    <li>- DANA</li>
+                    <li>- OVO</li>
+                    <li>- GoPay</li>
+                    <li>- LinkAja</li>
+                    <li>- AstraPay</li>
+                    <li>- Grab</li>
+                    <li>- iSaku</li>
+                </ul>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-mobile-screen"></i>
+                <h3>Pulsa & Internet</h3>
+                <ul>
+                    <li>- Pulsa Semua Operator</li>
+                    <li>- Paket Internet (Data)</li>
+                </ul>
+            </div>
+            <div class="card">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>Listrik</h3>
+                <ul>
+                    <li>- Token Listrik PLN</li>
+                    <li>- Tagihan Listrik</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="pesan" class="container">
+        <h2 class="section-title">Formulir Pesanan</h2>
+        <div class="form-container">
+            <form onsubmit="kirimKeWhatsApp(event)">
+                <div class="form-group">
+                    <label for="kategori">Pilih Kategori</label>
+                    <select id="kategori" required>
+                        <option value="">-- Pilih Layanan --</option>
+                        <option value="Top Up Game">Top Up Game</option>
+                        <option value="Top Up E-Wallet">Top Up E-Wallet</option>
+                        <option value="Pulsa">Pulsa</option>
+                        <option value="Paket Internet">Paket Internet</option>
+                        <option value="Listrik PLN">Listrik PLN</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="produk">Detail Produk (Contoh: Free Fire 720 Diamond / Pulsa Tsel 50k)</label>
+                    <input type="text" id="produk" placeholder="Masukkan detail produk..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tujuan">ID Game / Nomor HP / ID Pelanggan PLN</label>
+                    <input type="text" id="tujuan" placeholder="Masukkan ID / Nomor Tujuan..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="pembayaran">Metode Pembayaran</label>
+                    <select id="pembayaran" required>
+                        <option value="">-- Pilih Pembayaran --</option>
+                        <option value="DANA">DANA</option>
+                        <option value="QRIS">QRIS</option>
+                    </select>
+                </div>
+
+                <div class="payment-info">
+                    <p><strong>Informasi Pembayaran:</strong></p>
+                    <p>DANA: <b>085113248454</b> (a.n WEE SOKU)</p>
+                    <p>QRIS: <i>Scan Barcode yang akan diberikan Admin via WhatsApp</i></p>
+                </div>
+                <br>
+
+                <button type="submit" class="btn-wa">
+                    <i class="fa-brands fa-whatsapp"></i> Lanjutkan Pembayaran ke WhatsApp Admin
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <section id="tentang" class="container">
+        <h2 class="section-title">Tentang WEE SOKU</h2>
+        <div class="tentang-kami">
+            <table class="info-table">
+                <tr>
+                    <td>Pendiri</td>
+                    <td>Rendi Aji Wijaya</td>
+                </tr>
+                <tr>
+                    <td>Tanggal Berdiri</td>
+                    <td>7 Muharram 1448 / Selasa 23 Juni 2026</td>
+                </tr>
+                <tr>
+                    <td>Tanggal Peresmian</td>
+                    <td>22 Muharram 1448 / Rabu 8 Juli 2026</td>
+                </tr>
+                <tr>
+                    <td>Industri</td>
+                    <td>Fintech / Produk Digital</td>
+                </tr>
+                <tr>
+                    <td>Layanan Utama</td>
+                    <td>Pulsa, Paket Internet, Top up Game, Top up E-Wallet, dan Listrik</td>
+                </tr>
+            </table>
+
+            <p style="text-align: justify; margin-top: 1rem;">
+                <strong>WEE SOKU</strong> adalah penyedia layanan produk digital yang menghadirkan transaksi cepat, aman, dan terpercaya untuk memenuhi kebutuhan harian masyarakat. Dengan proses instan, harga yang kompetitif, dan pelayanan yang responsif, WEE SOKU berkomitmen memberikan pengalaman transaksi yang mudah dan nyaman.
+            </p>
+            <p style="text-align: justify; margin-top: 1rem;">
+                WEE SOKU hadir sebagai solusi praktis untuk berbagai kebutuhan digital dalam satu tempat. Kepuasan pelanggan adalah prioritas utama kami, sehingga setiap transaksi diproses dengan cepat, aman, dan didukung pelayanan yang profesional.
+            </p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 WEE SOKU - Dikelola oleh Rendi Aji Wijaya. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function kirimKeWhatsApp(event) {
+            event.preventDefault(); // Mencegah form reload
+
+            // Mengambil nilai dari form
+            const kategori = document.getElementById('kategori').value;
+            const produk = document.getElementById('produk').value;
+            const tujuan = document.getElementById('tujuan').value;
+            const pembayaran = document.getElementById('pembayaran').value;
+
+            // Nomor WA Admin (format internasional tanpa +)
+            const nomorAdmin = "6285113248454";
+
+            // Format Pesan WhatsApp
+            const pesan = `Halo WEE SOKU, saya ingin melakukan pemesanan:%0A%0A` +
+                          `*Kategori Layanan:* ${kategori}%0A` +
+                          `*Detail Produk:* ${produk}%0A` +
+                          `*Tujuan (ID/No HP):* ${tujuan}%0A` +
+                          `*Metode Pembayaran:* ${pembayaran}%0A%0A` +
+                          `Mohon informasikan total harga dan instruksi selanjutnya. Terima kasih!`;
+
+            // Membuat Link WhatsApp
+            const urlWA = `https://api.whatsapp.com/send?phone=${nomorAdmin}&text=${pesan}`;
+
+            // Membuka tab baru ke WhatsApp
+            window.open(urlWA, '_blank');
+        }
+    </script>
+</body>
+</html>
