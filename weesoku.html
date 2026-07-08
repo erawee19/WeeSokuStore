@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEE SOKU | Semua Kebutuhan Digital Anda</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS Variables untuk Tema Light & Dark */
+        :root {
+            --primary-color: #0d9488; /* Hijau Tosca */
+            --primary-hover: #0f766e;
+            --bg-color: #f3f4f6;
+            --text-color: #111827;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --input-bg: #ffffff;
+        }
+
+        .dark-mode {
+            --primary-color: #14b8a6; /* Tosca lebih terang di mode gelap */
+            --primary-hover: #0d9488;
+            --bg-color: #121212;
+            --text-color: #f9fafb;
+            --card-bg: rgba(30, 30, 30, 0.6);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            --nav-bg: rgba(18, 18, 18, 0.9);
+            --input-bg: #1f2937;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+            /* Background pattern modern */
+            background-image: radial-gradient(var(--primary-color) 0.5px, transparent 0.5px), radial-gradient(var(--primary-color) 0.5px, var(--bg-color) 0.5px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            background-attachment: fixed;
+            opacity: 0.95;
+        }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .spinner {
+            width: 50px; height: 50px;
+            border: 5px solid var(--text-color);
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Typography & Utility */
+        h1, h2, h3 { margin-bottom: 15px; }
+        p { margin-bottom: 10px; line-height: 1.6; }
+        .text-center { text-align: center; }
+        .section-title { font-size: 2.2rem; text-align: center; margin-bottom: 40px; color: var(--primary-color); }
+        
+        /* Layouts */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 80px 0; }
+
+        /* Glassmorphism Class */
+        .glass {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: var(--glass-shadow);
+            padding: 30px;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); text-decoration: none; letter-spacing: 1px; }
+        .nav-links a { color: var(--text-color); text-decoration: none; margin: 0 15px; font-weight: 600; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary-color); }
+        .theme-toggle { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: var(--text-color); outline: none; }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        .btn-primary { background: var(--primary-color); color: #fff; }
+        .btn-primary:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(13, 148, 136, 0.4); }
+        .btn-outline { background: transparent; border: 2px solid var(--primary-color); color: var(--text-color); }
+        .btn-outline:hover { background: var(--primary-color); color: #fff; transform: translateY(-2px); }
+
+        /* Hero Section */
+        #home { min-height: 100vh; display: flex; align-items: center; text-align: center; padding-top: 100px; }
+        .hero-content h1 { font-size: 3.5rem; letter-spacing: 2px; margin-bottom: 20px; }
+        .hero-content h1 span { color: var(--primary-color); }
+        .hero-content p { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.9; }
+        .hero-btns { display: flex; gap: 15px; justify-content: center; }
+
+        /* Services Section */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .service-card { transition: transform 0.3s ease; }
+        .service-card:hover { transform: translateY(-10px); }
+        .service-icon { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px; }
+        .service-card ul { list-style: none; margin-top: 15px; text-align: left; }
+        .service-card ul li { margin-bottom: 8px; font-size: 0.95rem; }
+        .service-card ul li i { color: var(--primary-color); margin-right: 10px; font-size: 0.8rem; }
+
+        /* Order Form */
+        .form-container { max-width: 800px; margin: 0 auto; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; }
+        input, select {
+            width: 100%; padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--input-bg);
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        input:focus, select:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(13, 148, 136, 0.2); }
+        .dynamic-field { display: none; }
+        .dynamic-field.active { display: block; animation: fadeIn 0.5s; }
+
+        /* Payment Section */
+        .payment-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .qris-box img { width: 100%; max-width: 250px; border-radius: 10px; margin-bottom: 15px; border: 2px dashed var(--primary-color); padding: 10px; }
+        .dana-box { display: flex; align-items: center; justify-content: space-between; background: var(--input-bg); padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid var(--border-color); }
+        .dana-number { font-size: 1.2rem; font-weight: bold; letter-spacing: 2px; }
+
+        /* About Section */
+        .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .about-text table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .about-text table td { padding: 10px 0; border-bottom: 1px solid var(--border-color); }
+        .about-text table td:first-child { font-weight: 600; width: 40%; }
+
+        /* Footer */
+        footer { background: #111; color: #fff; padding: 40px 0 20px; text-align: center; }
+        .footer-content { margin-bottom: 20px; }
+        .footer-content h3 { color: var(--primary-color); }
+        .copyright { font-size: 0.9rem; opacity: 0.7; margin-top: 20px; border-top: 1px solid #333; padding-top: 20px; }
+
+        /* Animations */
+        .fade-in-section { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; will-change: opacity, visibility; }
+        .fade-in-section.is-visible { opacity: 1; transform: none; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Back to Top */
+        #back-to-top {
+            position: fixed; bottom: 30px; right: 30px;
+            background: var(--primary-color); color: #fff;
+            width: 45px; height: 45px;
+            border-radius: 50%; border: none;
+            font-size: 1.2rem; cursor: pointer;
+            display: none; justify-content: center; align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 100; transition: background 0.3s;
+        }
+        #back-to-top:hover { background: var(--primary-hover); }
+
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-btns { flex-direction: column; }
+            .about-content { grid-template-columns: 1fr; }
+            nav .nav-links { display: none; } /* Simplified for mobile, only logo and theme toggle */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <nav>
+        <div class="container nav-container">
+            <a href="#home" class="logo">WEE SOKU</a>
+            <div class="nav-links">
+                <a href="#home">Beranda</a>
+                <a href="#services">Layanan</a>
+                <a href="#order">Pesan</a>
+                <a href="#payment">Pembayaran</a>
+                <a href="#about">Tentang Kami</a>
+            </div>
+            <button class="theme-toggle" id="themeToggle" title="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header id="home">
+        <div class="container">
+            <div class="hero-content fade-in-section">
+                <h1>Selamat datang di <span>WEE SOKU</span></h1>
+                <p>Satu Tempat untuk Semua Kebutuhan Digital Anda.</p>
+                <div class="hero-btns">
+                    <a href="#order" class="btn btn-primary"><i class="fas fa-shopping-cart"></i> Pesan Sekarang</a>
+                    <a href="https://wa.me/6285113248454" target="_blank" class="btn btn-outline"><i class="fab fa-whatsapp"></i> Hubungi Admin</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="services" class="container">
+        <h2 class="section-title fade-in-section">Layanan Kami</h2>
+        <div class="services-grid">
+            
+            <div class="service-card glass fade-in-section">
+                <i class="fas fa-gamepad service-icon"></i>
+                <h3>Top Up Game</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> Free Fire</li>
+                    <li><i class="fas fa-check"></i> Mobile Legends</li>
+                    <li><i class="fas fa-check"></i> PUBG Mobile</li>
+                    <li><i class="fas fa-check"></i> Call of Duty Mobile</li>
+                    <li><i class="fas fa-check"></i> Genshin Impact</li>
+                    <li><i class="fas fa-check"></i> Honor of Kings</li>
+                    <li><i class="fas fa-check"></i> Dan lainnya...</li>
+                </ul>
+            </div>
+
+            <div class="service-card glass fade-in-section">
+                <i class="fas fa-wallet service-icon"></i>
+                <h3>Top Up E-Wallet</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> DANA & OVO</li>
+                    <li><i class="fas fa-check"></i> GoPay & LinkAja</li>
+                    <li><i class="fas fa-check"></i> AstraPay & Grab</li>
+                    <li><i class="fas fa-check"></i> i.saku & ShopeePay</li>
+                    <li><i class="fas fa-check"></i> Dan lainnya...</li>
+                </ul>
+            </div>
+
+            <div class="service-card glass fade-in-section">
+                <i class="fas fa-mobile-alt service-icon"></i>
+                <h3>Pulsa & Paket Data</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> Telkomsel & by.U</li>
+                    <li><i class="fas fa-check"></i> Indosat & Tri (3)</li>
+                    <li><i class="fas fa-check"></i> XL Axiata & Axis</li>
+                    <li><i class="fas fa-check"></i> Smartfren</li>
+                    <li><i class="fas fa-check"></i> Tersedia Pulsa & Kuota</li>
+                </ul>
+            </div>
+
+            <div class="service-card glass fade-in-section">
+                <i class="fas fa-bolt service-icon"></i>
+                <h3>Token Listrik PLN</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> Pembelian Token Instan</li>
+                    <li><i class="fas fa-check"></i> Proses Cepat & Aman</li>
+                    <li><i class="fas fa-check"></i> Harga Kompetitif</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="order">
+        <div class="container">
+            <div class="glass form-container fade-in-section">
+                <h2 class="section-title" style="margin-bottom: 20px;">Form Pemesanan</h2>
+                <form id="orderForm">
+                    <div class="form-group">
+                        <label for="nama">Nama Pelanggan *</label>
+                        <input type="text" id="nama" placeholder="Masukkan nama Anda" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="whatsapp">Nomor WhatsApp *</label>
+                        <input type="number" id="whatsapp" placeholder="Contoh: 08123456789" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="layanan">Pilih Layanan *</label>
+                        <select id="layanan" required>
+                            <option value="">-- Pilih Layanan --</option>
+                            <option value="Top Up Game">Top Up Game</option>
+                            <option value="Top Up E-Wallet">Top Up E-Wallet</option>
+                            <option value="Pulsa">Pulsa</option>
+                            <option value="Paket Internet">Paket Internet</option>
+                            <option value="Token Listrik PLN">Token Listrik PLN</option>
+                        </select>
+                    </div>
+
+                    <div id="field-game" class="dynamic-field">
+                        <div class="form-group">
+                            <label for="game">Pilih Game</label>
+                            <select id="game">
+                                <option value="Free Fire">Free Fire</option>
+                                <option value="Mobile Legends">Mobile Legends</option>
+                                <option value="PUBG Mobile">PUBG Mobile</option>
+                                <option value="Call of Duty Mobile">Call of Duty Mobile</option>
+                                <option value="Genshin Impact">Genshin Impact</option>
+                                <option value="Honor of Kings">Honor of Kings</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="userid">Masukkan User ID</label>
+                            <input type="text" id="userid" placeholder="Contoh: 12345678 (1234)">
+                        </div>
+                        <div class="form-group">
+                            <label for="server">Server (Opsional / Jika Diperlukan)</label>
+                            <input type="text" id="server" placeholder="Contoh: Asia / 1234">
+                        </div>
+                    </div>
+
+                    <div id="field-ewallet" class="dynamic-field">
+                        <div class="form-group">
+                            <label for="ewallet">Pilih E-Wallet</label>
+                            <select id="ewallet">
+                                <option value="DANA">DANA</option>
+                                <option value="OVO">OVO</option>
+                                <option value="GoPay">GoPay</option>
+                                <option value="LinkAja">LinkAja</option>
+                                <option value="ShopeePay">ShopeePay</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="no_ewallet">Nomor Tujuan E-Wallet</label>
+                            <input type="number" id="no_ewallet" placeholder="Masukkan nomor akun">
+                        </div>
+                    </div>
+
+                    <div id="field-pulsa" class="dynamic-field">
+                        <div class="form-group">
+                            <label for="operator">Pilih Operator</label>
+                            <select id="operator">
+                                <option value="Telkomsel">Telkomsel</option>
+                                <option value="Indosat">Indosat</option>
+                                <option value="XL Axiata">XL Axiata</option>
+                                <option value="Axis">Axis</option>
+                                <option value="Tri (3)">Tri (3)</option>
+                                <option value="Smartfren">Smartfren</option>
+                                <option value="by.U">by.U</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="no_hp">Nomor HP</label>
+                            <input type="number" id="no_hp" placeholder="Masukkan Nomor HP">
+                        </div>
+                        <div class="form-group">
+                            <label for="nominal_pulsa" id="label_nominal">Nominal / Paket</label>
+                            <input type="text" id="nominal_pulsa" placeholder="Contoh: 10.000 atau Kuota 10GB">
+                        </div>
+                    </div>
+
+                    <div id="field-listrik" class="dynamic-field">
+                        <div class="form-group">
+                            <label for="no_meter">Nomor Meter PLN</label>
+                            <input type="number" id="no_meter" placeholder="Masukkan 11/12 digit nomor meter">
+                        </div>
+                        <div class="form-group">
+                            <label for="nominal_listrik">Nominal Token</label>
+                            <select id="nominal_listrik">
+                                <option value="20.000">Rp 20.000</option>
+                                <option value="50.000">Rp 50.000</option>
+                                <option value="100.000">Rp 100.000</option>
+                                <option value="200.000">Rp 200.000</option>
+                                <option value="500.000">Rp 500.000</option>
+                                <option value="1.000.000">Rp 1.000.000</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 15px;">
+                        <i class="fab fa-whatsapp"></i> Pesan Sekarang
+                    </button>
+                </form>
+                </div>
+        </div>
+    </section>
+
+    <section id="payment" class="container">
+        <h2 class="section-title fade-in-section">Metode Pembayaran</h2>
+        <div class="payment-grid">
+            <div class="glass text-center fade-in-section">
+                <h3><i class="fas fa-qrcode"></i> QRIS</h3>
+                <p>Scan QRIS untuk melakukan pembayaran.</p>
+                <div class="qris-box">
+                    <img src="https://via.placeholder.com/250x250.png?text=QRIS+WEE+SOKU" alt="QRIS WEE SOKU">
+                </div>
+                <p style="font-size: 0.9rem; opacity: 0.8;">Mendukung semua E-Wallet dan Mobile Banking</p>
+            </div>
+            
+            <div class="glass fade-in-section">
+                <h3 class="text-center"><i class="fas fa-wallet"></i> Transfer DANA</h3>
+                <p class="text-center">Kirimkan pembayaran ke nomor DANA berikut:</p>
+                
+                <div class="dana-box">
+                    <span class="dana-number" id="danaNumber">085113248454</span>
+                    <button type="button" class="btn btn-outline" onclick="copyDana()" style="padding: 8px 15px; font-size: 0.9rem;">
+                        <i class="fas fa-copy"></i> Salin
+                    </button>
+                </div>
+                
+                <div style="margin-top: 30px; text-align: center;">
+                    <p>Sudah melakukan pembayaran?</p>
+                    <a href="#" onclick="konfirmasiBayar(event)" class="btn btn-primary" style="width: 100%; margin-top: 10px;">
+                        <i class="fab fa-whatsapp"></i> Saya Sudah Bayar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="container">
+        <div class="glass about-content fade-in-section">
+            <div class="about-text">
+                <h2 style="color: var(--primary-color);">Tentang WEE SOKU</h2>
+                <p><strong>WEE SOKU</strong> adalah penyedia layanan produk digital yang menghadirkan transaksi cepat, aman, dan terpercaya untuk memenuhi kebutuhan harian masyarakat. Kami berkomitmen memberikan pengalaman transaksi yang mudah, nyaman, dan profesional.</p>
+                
+                <table>
+                    <tr>
+                        <td>Pendiri</td>
+                        <td>Rendi Aji Wijaya</td>
+                    </tr>
+                    <tr>
+                        <td>Berdiri</td>
+                        <td>23 Juni 2026 (7 Muharram 1448 H)</td>
+                    </tr>
+                    <tr>
+                        <td>Peresmian</td>
+                        <td>8 Juli 2026 (22 Muharram 1448 H)</td>
+                    </tr>
+                    <tr>
+                        <td>Industri</td>
+                        <td>Fintech / Produk Digital</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="about-slogan text-center">
+                <i class="fas fa-shield-alt" style="font-size: 5rem; color: var(--primary-color); margin-bottom: 20px;"></i>
+                <h3>"Satu Tempat untuk Semua Kebutuhan Digital Anda."</h3>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h3>WEE SOKU</h3>
+                <p style="margin: 10px 0;">"Satu Tempat untuk Semua Kebutuhan Digital Anda."</p>
+                <p><i class="fab fa-whatsapp"></i> WhatsApp Admin: 085113248454</p>
+                <p><i class="far fa-clock"></i> Jam Operasional: 07.00 - 19.00 WIB</p>
+            </div>
+            <div class="copyright">
+                &copy; 2026 WEE SOKU. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <button id="back-to-top" onclick="window.scrollTo(0,0)">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // 1. Loading Screen
+        window.addEventListener("load", () => {
+            const loader = document.getElementById("loader");
+            loader.style.opacity = "0";
+            setTimeout(() => {
+                loader.style.display = "none";
+            }, 500);
+        });
+
+        // 2. Dark/Light Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const icon = themeToggle.querySelector('i');
+            if(body.classList.contains('dark-mode')){
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // 3. Scroll Animations (Intersection Observer)
+        const faders = document.querySelectorAll('.fade-in-section');
+        const appearOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+        const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+
+        // 4. Back to top button
+        const backToTop = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.style.display = 'flex';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+
+        // 5. Dynamic Form Logic
+        const layananSelect = document.getElementById('layanan');
+        const dynamicFields = document.querySelectorAll('.dynamic-field');
+        
+        layananSelect.addEventListener('change', function() {
+            // Sembunyikan semua field
+            dynamicFields.forEach(field => field.classList.remove('active'));
+            
+            // Tampilkan field sesuai pilihan
+            const val = this.value;
+            if(val === 'Top Up Game') {
+                document.getElementById('field-game').classList.add('active');
+            } else if(val === 'Top Up E-Wallet') {
+                document.getElementById('field-ewallet').classList.add('active');
+            } else if(val === 'Pulsa' || val === 'Paket Internet') {
+                document.getElementById('field-pulsa').classList.add('active');
+                // Ubah label tergantung pulsa atau paket
+                document.getElementById('label_nominal').innerText = val === 'Pulsa' ? 'Nominal Pulsa' : 'Pilihan Paket';
+            } else if(val === 'Token Listrik PLN') {
+                document.getElementById('field-listrik').classList.add('active');
+            }
+        });
+
+        // 6. Form Submission (Redirect to WhatsApp)
+        const orderForm = document.getElementById('orderForm');
+        orderForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah reload halaman
+            
+            const adminWA = "6285113248454"; // Nomor admin format internasional
+            const nama = document.getElementById('nama').value;
+            const layanan = document.getElementById('layanan').value;
+            
+            let produk = "";
+            let target = "";
+            let tambahan = "";
+
+            if (layanan === 'Top Up Game') {
+                produk = document.getElementById('game').value;
+                target = document.getElementById('userid').value;
+                const server = document.getElementById('server').value;
+                tambahan = server ? `\nServer: ${server}` : '';
+            } else if (layanan === 'Top Up E-Wallet') {
+                produk = document.getElementById('ewallet').value;
+                target = document.getElementById('no_ewallet').value;
+            } else if (layanan === 'Pulsa' || layanan === 'Paket Internet') {
+                produk = document.getElementById('operator').value;
+                target = document.getElementById('no_hp').value;
+                tambahan = `\nNominal / Paket: ${document.getElementById('nominal_pulsa').value}`;
+            } else if (layanan === 'Token Listrik PLN') {
+                produk = 'Token PLN';
+                target = document.getElementById('no_meter').value;
+                tambahan = `\nNominal Token: Rp ${document.getElementById('nominal_listrik').value}`;
+            }
+
+            // Menyusun format pesan
+            let pesan = `Halo Admin WEE SOKU.\nSaya ingin melakukan transaksi.\n\n`;
+            pesan += `Nama: ${nama}\n`;
+            pesan += `Layanan: ${layanan}\n`;
+            pesan += `Produk: ${produk}\n`;
+            pesan += `Nomor Tujuan / User ID: ${target}`;
+            pesan += tambahan;
+            pesan += `\n\nMohon diproses.\nTerima kasih.`;
+
+            // Encode URL dan Redirect
+            const urlWA = `https://wa.me/${adminWA}?text=${encodeURIComponent(pesan)}`;
+            window.open(urlWA, '_blank');
+        });
+
+        // 7. Copy DANA Number
+        function copyDana() {
+            const number = document.getElementById('danaNumber').innerText;
+            navigator.clipboard.writeText(number).then(() => {
+                alert('Nomor DANA berhasil disalin: ' + number);
+            });
+        }
+
+        // 8. WhatsApp Pembayaran (Konfirmasi)
+        function konfirmasiBayar(e) {
+            e.preventDefault();
+            const adminWA = "6285113248454";
+            const pesan = "Halo Admin WEE SOKU.\nSaya sudah melakukan pembayaran.\nMohon dicek.\n\nTerima kasih.";
+            const urlWA = `https://wa.me/${adminWA}?text=${encodeURIComponent(pesan)}`;
+            window.open(urlWA, '_blank');
+        }
+    </script>
+</body>
+</html>
